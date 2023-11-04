@@ -1,4 +1,5 @@
 const core = require('@actions/core');
+const path = require('path');
 const fs = require('fs');
 // Get the folder parameter value
 const folder = core.getInput('folder');
@@ -6,15 +7,15 @@ const folder = core.getInput('folder');
 async function run() {
     try {
 
-        let path = path.join(process.cwd(), folder);
-        process.chdir(path);  
+        let newpath = path.join(process.cwd(), folder);
+        process.chdir(newpath);  
         console.log(`The value of the folder parameter is: ${folder}`);
-        console.log("The path is: ",path);
+        console.log("The path is: ",newpath);
         
-        let sfdxJson = require(path + '/sfdx-project.json');
+        let sfdxJson = require(newpath + '/sfdx-project.json');
         
         // Reading the content of the README file
-        let readmeContent = fs.readFileSync(path + '/README.md', 'utf8');
+        let readmeContent = fs.readFileSync(newpath + '/README.md', 'utf8');
 
         // We need all package directories
         const packageDirectories = sfdxJson.packageDirectories;
@@ -63,7 +64,7 @@ async function run() {
         );
 
         // And finally we're updating the README.
-        fs.writeFileSync(path + '/README.md', readmeContent, 'utf8');
+        fs.writeFileSync(newpath + '/README.md', readmeContent, 'utf8');
 
         core.setOutput('isSuccess', true);
     } catch (error) {
