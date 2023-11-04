@@ -7,10 +7,10 @@ async function run() {
     try {
 
         let path = path.join(process.cwd(), folder);
-        process.chdir(path);
-        
+        process.chdir(path);  
         console.log(`The value of the folder parameter is: ${folder}`);
-        let path = process.cwd();
+        console.log("The path is: ",path);
+        
         let sfdxJson = require(path + '/sfdx-project.json');
         
         // Reading the content of the README file
