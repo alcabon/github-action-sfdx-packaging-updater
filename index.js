@@ -1,10 +1,18 @@
 const core = require('@actions/core');
 const fs = require('fs');
-const path = process.cwd();
-const sfdxJson = require(path + '/sfdx-project.json');
+// Get the folder parameter value
+const folder = core.getInput('folder');
 
 async function run() {
     try {
+
+        let path = path.join(process.cwd(), folder);
+        process.chdir(path);
+        
+        console.log(`The value of the folder parameter is: ${folder}`);
+        let path = process.cwd();
+        let sfdxJson = require(path + '/sfdx-project.json');
+        
         // Reading the content of the README file
         let readmeContent = fs.readFileSync(path + '/README.md', 'utf8');
 
