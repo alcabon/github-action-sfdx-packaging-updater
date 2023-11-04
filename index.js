@@ -59,14 +59,20 @@ async function run() {
         let json_sfdx_project = JSON.stringify(sfdxJson, null, 4).concat('\n');
         console.log('sfdx-project.json content:' + json_sfdx_project);
         // Writing back potential changes to the sfdx-project.json file...
-        fs.writeFileSync(
-            newpath + '/sfdx-project.json',
-            json_sfdx_project ,
-            'utf8'
-        );
+        try {
+            fs.writeFileSync(newpath + '/sfdx-project.json', json_sfdx_project , 'utf8');
+         } catch(err) {
+            console.error(err);
+        }
         console.log('readmeContent:' + readmeContent);
         // And finally we're updating the README.
-        fs.writeFileSync(newpath + '/README.md', readmeContent, 'utf8');
+        
+        try {
+            fs.writeFileSync(newpath + '/README.md', readmeContent, 'utf8');
+            console.log("File written successfully");
+        } catch(err) {
+            console.error(err);
+        }
 
         core.setOutput('isSuccess', true);
     } catch (error) {
