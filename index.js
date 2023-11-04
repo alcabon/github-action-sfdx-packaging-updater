@@ -55,14 +55,16 @@ async function run() {
                 });
             }
         });
-
+        console.log('sfdx-project.json path:' + newpath + '/sfdx-project.json');
+        let json_sfdx_project = JSON.stringify(sfdxJson, null, 4).concat('\n');
+        console.log('sfdx-project.json content:' + json_sfdx_project);
         // Writing back potential changes to the sfdx-project.json file...
         fs.writeFileSync(
-            './sfdx-project.json',
-            JSON.stringify(sfdxJson, null, 4).concat('\n'),
+            newpath + '/sfdx-project.json',
+            json_sfdx_project ,
             'utf8'
         );
-
+        console.log('readmeContent:' + readmeContent);
         // And finally we're updating the README.
         fs.writeFileSync(newpath + '/README.md', readmeContent, 'utf8');
 
